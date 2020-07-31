@@ -91,8 +91,72 @@ function findAndSaveUser(Users) {
   위의 예제는 findOne과 save 메서드가 내부적으로 프로미스 객체를 가지고 있어서 가능하다.
   지원하지 않는 경우 프로미스로 바꿀 수 있는 방법은 따로 있다.(util 모듈의 promisify를 이용해야함)
 
+- 프로미스 여러 개를 한번에 실행할 수 있는 방법 Promise.all
+```JavaScript
+const promise1 = Promise.resolve('성공1');
+const promise2 = Promise.resolve('성공2');
+Promise.all([promise1, promise2])
+  .then((result) => {
+    console.log(result); // ['성공1', '성공2']
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+- Promise.resolve는 즉시 resolve하는 프로미스를 만드는 방법 (Promise.reject는 즉시 reject)
+- 프로미스가 여러 개 있을 때 Promise.all에 넣으면 모두 resolve될 때까지 기다렸다가 then으로 넘어간다.
+  result 매개변수에 각각의 프로미스 결괏값이 배열로 들어간다.
+  Promise 중 하나라도 reject가 되면 catch로 넘어간다.
+
 ### async/await
 - 노드 7.6버전부터 지원되는 기능 / 자바스크립트 스펙은 ES2017
 - 프로미스가 콜백 지옥을 해결했다지만, 여전히 코드가 장황하다. async/await 문법은 프로미스를 사용한 코드를 한 번 더 깔끔하게 줄여준다.
 
+```JavaScript
+// async function findAndSaveUser(Users) {
+const findAndSaveUser = async (Users) => {
+  try {
+    let user = await Users.findOne({});
+    user.name = 'zero';
+    user = await user.save();
+    user = await Users.findOne({ gender: 'm' });
+    // 생략
+  } catch (error) {
+    console.error(error);
+  }
+}
+```
+
+- for문과 async/await을 같이 써서 Promise.all을 대체할 수도 있다. 이것은 노드 10버전부터 지원하는 ES2018 문법이다.
+```JavaScript
+const promise1 = Promise.resolve('성공1');
+const promise2 = Promise.resolve('성공2');
+(async() => {
+  for await (promise of [promise1, promise2]) {
+    console.log(promise);
+  }
+})();
+```
+- Promise.all 대신 for await of문을 사용해서 프로미스를 반복
+
+## 프런트엔드 자바스크립트
+
+### AJAX
+- AJAX는 비동기적 웹 서비스를 개발하기 위한 기법(이동 없이 서버에 요청을 보내고 응답을 보내는 기술)
+```JavaScript
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() { // 요청에 대한 콜백
+  if (xhr.readyState === 200 || xhr.status === 201) { // 응답 코드가 200이나 201이면
+    console.log(xhr.responseText); // 서버에 보내주는 값
+  } else {
+    console.error(xhr.responseText);
+  }
+};
+xhr.open('GET', 'https://www.zerocho.com/api/get'); // 메서드와 주소 설정
+xhr.send(); // 요청 전송
+```
+
 ### 66페이지부터!
+
+```JavaScript
+```
