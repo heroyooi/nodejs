@@ -1,162 +1,20 @@
 # NODEJS
-- Node.js를 학습하기 위한 저장소입니다.
 
-## ES2015(ES6)+
+## 1. 노드의 정의
 
-### const, let
-- const, let은 블록 스코프를 가지므로 블록 밖에서는 변수에 접근할 수 없다.
-- 블록의 범위는 if, while, for, function 등의 중괄호이다.
+- Node.js는 크롬 V8 자바스크립트 엔진으로 빌드된 자바스크립트 런타임(실행기)입니다.
+- 노드는 싱글 스레드 모델에 비동기 I/O
 
-### 객체 리터럴
-```JavaScript
-var sayNode = function() {
-  console.log('Node');
-};
-var es = 'ES';
+### 이벤트 기반
 
-const newObject = {
-  sayJS() {
-    console.log('JS');
-  },
-  sayNode,
-  [es + 6]: 'Fantastic',
-};
+- 이벤트가 발생할 때 미리 지정해둔 작업을 수행하는 방식
+  · 이벤트의 예: 클릭, 네트워크 요청, 타이머 등
+  · 이벤트 리스너: 이벤트를 등록하는 함수
+  · 콜백 함수: 이벤트가 발생했을 떄 실행될 함수
 
-newObject.sayNode(); // Node
-newObject.sayJS();   // JS
-console.log(newObject.ES6); // Fantastic
-```
+## 참고 링크
 
-### 화살표 함수, this
-```JavaScript
-const relationship = {
-  name: 'hero',
-  friends: ['nero', 'zero', 'xero'],
-  logFriends() {
-    this.friends.forEach(friend => {
-      console.log(this.name, friend);
-    });
-  },
-};
-relationship.logFriends();
-```
+[모던 JavaScript 튜토리얼](https://ko.javascript.info)
 
-### 프로미스
-- 자바스크립트와 노드에서는 주로 비동기 프로그래밍을 한다. 특히 이벤트 주도 방식 때문에 콜백 함수를 자주 사용한다.
-  ES2015부터는 자바스크립트와 노드의 API들이 콜백 대신 프로미스 기반으로 재구성 된다.
 
-- 프로미스는 다음과 같은 규칙이 있다. 먼저 프로미스 객체를 생성해야 한다.
-```JavaScript
-const condition = true; // true면 resolve, false면 reject
-const promise = new Promise((resolve, reject) => {
-  if (condition) {
-    resolve('성공');
-  } else {
-    reject('실패');
-  }
-});
-
-promise
-  .then((message) => {
-    console.log(message); // 성공(resolve)한 경우 실행
-  })
-  .catch((error) => {
-    console.log(error); // 실패(reject)한 경우 실행
-  });
-```
-- new Promise로 프로미스를 생성할 수 있으며, 안에 resolve와 reject를 매개변수로 갖는 콜백 함수를 넣어준다.
-  이렇게 만든 promise 변수에 then과 catch 메서드를 붙일 수 있다. 프로미스 내부에서 resolve가 호출되면 then이 실행되고, reject가 호출되면 catch가 실행된다.
-  resolve와 reject에 넣어준 인자는 각각 then과 catch의 매개변수에서 받을 수 있다.
-
-```JavaScript
-function findAndSaveUser(Users) {
-  Users.findOne({})
-    .then((user) => {
-      user.name = 'zero';
-      return user.save();
-    })
-    .then((user) => {
-      return Users.findOne({ gender: 'm' });
-    })
-    .then((user) => {
-      // 생략
-    })
-    .catch(err => {
-      console.error(err);
-    })
-}
-```
-- 코드가 깊어지지 않고, then 메서드들은 순차적으로 실행된다. 에러도 마지막 catch에서 한번에 처리할 수 있다.
-  모든 콜백 함수를 위와 같이 바꿀 수 있는 것은 아니고, 메서드가 프로미스 방식을 지원해야 한다.
-  위의 예제는 findOne과 save 메서드가 내부적으로 프로미스 객체를 가지고 있어서 가능하다.
-  지원하지 않는 경우 프로미스로 바꿀 수 있는 방법은 따로 있다.(util 모듈의 promisify를 이용해야함)
-
-- 프로미스 여러 개를 한번에 실행할 수 있는 방법 Promise.all
-```JavaScript
-const promise1 = Promise.resolve('성공1');
-const promise2 = Promise.resolve('성공2');
-Promise.all([promise1, promise2])
-  .then((result) => {
-    console.log(result); // ['성공1', '성공2']
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-```
-- Promise.resolve는 즉시 resolve하는 프로미스를 만드는 방법 (Promise.reject는 즉시 reject)
-- 프로미스가 여러 개 있을 때 Promise.all에 넣으면 모두 resolve될 때까지 기다렸다가 then으로 넘어간다.
-  result 매개변수에 각각의 프로미스 결괏값이 배열로 들어간다.
-  Promise 중 하나라도 reject가 되면 catch로 넘어간다.
-
-### async/await
-- 노드 7.6버전부터 지원되는 기능 / 자바스크립트 스펙은 ES2017
-- 프로미스가 콜백 지옥을 해결했다지만, 여전히 코드가 장황하다. async/await 문법은 프로미스를 사용한 코드를 한 번 더 깔끔하게 줄여준다.
-
-```JavaScript
-// async function findAndSaveUser(Users) {
-const findAndSaveUser = async (Users) => {
-  try {
-    let user = await Users.findOne({});
-    user.name = 'zero';
-    user = await user.save();
-    user = await Users.findOne({ gender: 'm' });
-    // 생략
-  } catch (error) {
-    console.error(error);
-  }
-}
-```
-
-- for문과 async/await을 같이 써서 Promise.all을 대체할 수도 있다. 이것은 노드 10버전부터 지원하는 ES2018 문법이다.
-```JavaScript
-const promise1 = Promise.resolve('성공1');
-const promise2 = Promise.resolve('성공2');
-(async() => {
-  for await (promise of [promise1, promise2]) {
-    console.log(promise);
-  }
-})();
-```
-- Promise.all 대신 for await of문을 사용해서 프로미스를 반복
-
-## 프런트엔드 자바스크립트
-
-### AJAX
-- AJAX는 비동기적 웹 서비스를 개발하기 위한 기법(이동 없이 서버에 요청을 보내고 응답을 보내는 기술)
-```JavaScript
-var xhr = new XMLHttpRequest();
-xhr.onreadystatechange = function() { // 요청에 대한 콜백
-  if (xhr.readyState === 200 || xhr.status === 201) { // 응답 코드가 200이나 201이면
-    console.log(xhr.responseText); // 서버에 보내주는 값
-  } else {
-    console.error(xhr.responseText);
-  }
-};
-xhr.open('GET', 'https://www.zerocho.com/api/get'); // 메서드와 주소 설정
-xhr.send(); // 요청 전송
-```
-
-### 66페이지부터!
-
-```JavaScript
-```
+## 강의 1-3 | 03:00
