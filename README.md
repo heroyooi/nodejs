@@ -427,6 +427,82 @@ formData.getAll('item'); // ['orange', 'melon']
   · data-user-job -> dataset.userJob<br />
   · data-id -> dataset.id
 
+## 3.5 노드 내장 객체 알아보기
+
+### console 객체
+
+- 브라우저의 console 객체와 매우 유사
+  · console.time, console.timeEnd: 시간 로깅<br />
+  · console.error: 에러 로깅<br />
+  · console.log: 평범한 로그<br />
+  · console.dir: 객체 로깅<br />
+  · console.trace: 호출스택 로깅
+
+### 타이머 메서드
+
+- set 메서드와 clear 메서드가 대응됨
+  · set 메서드의 리턴 값(아이디)을 clear 메서드에 넣어 취소
+  · setTimeout(콜백 함수, 밀리초): 주어진 밀리초(1000분의 1초) 이후에 콜백 함수를 실행합니다.
+  · setInterval(콜백 함수, 밀리초): 주어진 밀리초마다 콜백 함수를 반복 실행합니다.
+  · setImmediate(콜백 함수): 콜백 함수를 즉시 실행합니다.
+
+  · clearTimeout(아이디): setTimeout을 취소합니다.
+  · clearInterval(아이디): setInterval을 취소합니다.
+  · clearImmediate(아이디): setImmediate를 취소합니다.
+
+###  __filename, __dirname
+- __filename: 현재 파일 경로
+- __dirname: 현재 폴더(디렉터리) 경로
+
+- server1: HTTP 서버 만들기
+- server2: fs로 HTML 읽어 제공하기
+
+### REST API
+- 서버에 요청을 보낼 때는 주소를 통해 요청의 내용을 표현
+
+- REST API(Representational State Transfer)
+· 서버의 자원을 정의하고 자원에 대한 주소를 지정하는 방법<br />
+· /user이면 사용자 정보에 관한 정보를 요청하는 것<br />
+· /post이면 게시글에 관련된 자원을 요청하는 것
+
+- HTTP 요청 메서드
+· GET: 서버 자원을 가져오려고 할 때 사용<br />
+· POST: 서버에 자원을 새로 등록하고자 할 때 사용(또는 뭘 써야할 지 애매할 때)<br />
+· PUT: 서버의 자원을 요청에 들어있는 자원으로 치환하고자할 때 사용<br />
+· PATCH: 서버 자원의 일부만 수정하고자 할 때 사용<br />
+· DELETE: 서버의 자원을 삭제하고자할 때 사용
+
+## 5.1 npm 알아보기
+
+- npx SemVer
+```Json (package.json)
+{
+  "dependencies": {
+    "body-parser": "^1.19.0", // ^첫번째 자리까지만 고정
+    "body-parser": "1.19.0" // 세번째 자리까지 고정
+  }
+}
+```
+
+## 5.4 기타 npm 명령어
+
+- npm outdated: 어떤 패키지에 기능 변화가 생겼는지 알 수 있음(npm rm 패키지명으로도 가능)
+- npm search 검색어: npm 패키지를 검색할 수 있음(npmjs.com에서도 가능)
+- npm info 패키지명: 패키지의 세부 정보 파악 가능
+- npm adduser: npm에 로그인을 하기 위한 명령어(npmjs.com에서 회원가입)
+- npm whoami: 현재 사용자가 누구인지
+- npm logout: 로그아웃
+
+- npm version patch: 세번재 자리가 버전업 되면서, 깃 커밋까지 됨
+- npm version minor: 두번재 자리가 버전업 되면서, 깃 커밋까지 됨
+- npm version major: 첫번재 자리가 버전업 되면서, 깃 커밋까지 됨
+
+- npm deprecate [패키지명][버전] [메시지]: 패키지를 설치할 때 경고 메시지를 띄우게 함(오류가 있는 패키지에 적용)
+- npm publish: 자신이 만든 패키지를 배포
+- npm unpublish npmtest-1234 --force: 자신이 만든 패키지를 배포 중단(배포 후 72시간 내에만 가능)
+  - 다른 사람이 내 패키지를 사용하고 있는데 배포가 중단되면 문제가 생기기 때문
+
 ## 참고 링크
 
 [모던 JavaScript 튜토리얼](https://ko.javascript.info)
+[NPM CLI Documentation](https://docs.npmjs.com/cli-documentation/cli)
