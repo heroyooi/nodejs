@@ -516,10 +516,16 @@ npm i express
 npm i -D nodemon
 ```
 
+## 6.2 morgan, bodyParser, cookieParser
+
+```command
+npm i morgan cookie-parser express-session
+```
+
 
 ## 참고 링크
 
 [모던 JavaScript 튜토리얼](https://ko.javascript.info)
 [NPM CLI Documentation](https://docs.npmjs.com/cli-documentation/cli)
 
-## 강좌 6-6 morgan, bodyParser, cookieParser
+## 강좌 6-6 morgan, bodyParser, cookieParser 02:00
