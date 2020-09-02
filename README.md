@@ -499,10 +499,27 @@ formData.getAll('item'); // ['orange', 'melon']
 
 - npm deprecate [패키지명][버전] [메시지]: 패키지를 설치할 때 경고 메시지를 띄우게 함(오류가 있는 패키지에 적용)
 - npm publish: 자신이 만든 패키지를 배포
-- npm unpublish npmtest-1234 --force: 자신이 만든 패키지를 배포 중단(배포 후 72시간 내에만 가능)
-  - 다른 사람이 내 패키지를 사용하고 있는데 배포가 중단되면 문제가 생기기 때문
+- npm unpublish npmtest-1234 --force: 자신이 만든 패키지를 배포 중단(배포 후 72시간 내에만 가능)<br />
+  다른 사람이 내 패키지를 사용하고 있는데 배포가 중단되면 문제가 생기기 때문
+
+- npm ls 모듈명: 해당 모듈이 사용되고 있는지 체크
+- npm ls inherits: 상속받는 모듈 리스트를 보여준다.
+- npm ll inherits: 상속받는 모듈 리스트를 더 상세히 보여준다.
+
+## 6.1 Express
+
+- learn-express
+
+```command
+npm init
+npm i express
+npm i -D nodemon
+```
+
 
 ## 참고 링크
 
 [모던 JavaScript 튜토리얼](https://ko.javascript.info)
 [NPM CLI Documentation](https://docs.npmjs.com/cli-documentation/cli)
+
+## 강좌 6-6 morgan, bodyParser, cookieParser
