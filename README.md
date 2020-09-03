@@ -472,6 +472,31 @@ formData.getAll('item'); // ['orange', 'melon']
 · PATCH: 서버 자원의 일부만 수정하고자 할 때 사용<br />
 · DELETE: 서버의 자원을 삭제하고자할 때 사용
 
+## 4.3 쿠키 이해하기
+
+로그인을 하려면 쿠키과 세션에 대해서 알아야 한다.
+
+- 쿠키 (cookie.js)
+  · name=heroyooi<br />
+  · 매 요청마다 서버에 동봉해서 보냄<br />
+  · 서버는 쿠키를 읽어 누구인지 파악
+
+- 쿠키 넣는 것을 직접 구현
+  · writeHead: 요청 헤더에 입력하는 메서드<br />
+  · Set-Cookie: 브라우저에게 쿠키를 설정하라고 명령
+
+- http 요청과 응답은 헤더와 본문을 가진다.
+  · 헤더는 요청 또는 응답에 대한 정보를 가짐<br />
+  · 본문은 주고받는 실제 데이터<br />
+  · 쿠키는 부가적인 정보이므로 헤더에 저장
+
+- 쿠키로 나를 식별하기 (cookie2.js)
+  · parseCookies: 쿠키 문자열을 객체로 변환<br />
+  · 주소가 /login인 경우와 /인 경우로 나뉨<br />
+  · /login인 경우 쿼리스트링으로 온 이름을 쿠키로 저장<br />
+  · 그 외의 경우 쿠키가 있는지 없는지 판단
+
+
 ## 5.1 npm 알아보기
 
 - npx SemVer
@@ -516,7 +541,7 @@ npm i express
 npm i -D nodemon
 ```
 
-## 6.2 morgan, bodyParser, cookieParser
+## 6.2 morgan, bodyParser, cookieParser, static 미들웨어
 
 ```command
 npm i morgan cookie-parser express-session
@@ -601,9 +626,15 @@ app.use('/', (req, res, next) => {
 });
 ```
 
+### multer
+```command
+
+```
+
 ## 참고 링크
 
 [모던 JavaScript 튜토리얼](https://ko.javascript.info)
 [NPM CLI Documentation](https://docs.npmjs.com/cli-documentation/cli)
 
-## 강좌 6-9
+## 강좌 4-5 | 11:10 | cookie2.js 작성중...
+## 강좌 6-9 | 1:25
