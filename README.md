@@ -521,11 +521,89 @@ npm i -D nodemon
 ```command
 npm i morgan cookie-parser express-session
 ```
+- 모든 미들웨어들은 내부적으로 next를 실행해준다.
 
+### morgan
+- 요청과 응답을 기록하는 라우터
+```JavaScript
+const morgan = require('morgan');
+
+app.use(morgan('dev')); // dev - 개발, combined - 배포(좀 더 상세하게 나온다.)
+```
+
+### cookieParser
+```JavaScript
+const cookieParser = require('cookie-parser');
+
+app.use(cookieParser('heroyooipassword'));
+
+app.get('/', (req, res, next) => {
+  req.cookies // { mycookie: 'test' }
+  req.signedCookies; // 쿠키를 암호화
+  // 'Set-Cookie': `name=${encodeURIComponent(name)}; Expires=${expires.toGMTString()}; HttpOnly; Path:/`,
+  res.cookie('name', encodeURIComponent(name), {
+    expires: new Date(),
+    httpOnly: true,
+    path: '/',
+  });
+  res.clearCookie('name', encodeURIComponent(name), {
+    httpOnly: true,
+    path: '/',
+  });
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+```
+
+### bodyParser
+- 더 이상 이 모듈을 사용할 필요가 없어졌다.
+```JavaScript
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.get('/', (req, res) => {
+  req.body.name // 사용자 이름
+});
+```
+- 위와같이 연결해주면 알아서 데이터가 파싱됨(익스프레스 상에 내장되어있음)
+- express.urlencoded(...) : 폼을 전송할 경우, 폼을 파싱해준다.
+- ({ extended: true }) : true면 qs, false면 querystring, qs가 querystring보다 훨씬 강력함.
+- 폼에서 이미지를 경우는 multer를 따로 써줘야한다.
+
+### static 미들웨어
+```JavaScript
+app.use('요청 경로', express.static('실제 경로'));
+app.use('/', express.static(__dirname, 'public'));
+```
+
+### 미들웨어간의 데이터 전송
+```JavaScript
+app.use((req, res, next) => {
+  req.data = 'heroyooi비번';
+});
+
+app.get('/', (req, res, next) => {
+  req.data // heroyooi비번
+});
+```
+- 메모리상에서 정리가 됨(안전하게 사용 가능)
+- 만약 계속 유지되고 싶은 데이터가 있다면 req.session.data로 넣으면 된다.
+
+### 미들웨어 확장하기
+- cors, passport 같은 모듈을 사용할 때 이 기법을 쓴다.
+- 내가 만든 미들웨어 안에 남이 만든 미들웨어를 쓰는 경우
+```JavaScript
+app.use('/', (req, res, next) => {
+  if (req.session.id) {
+    express.static(__dirname, 'public')(req, res, next)
+  } else {
+    next();
+  }
+});
+```
 
 ## 참고 링크
 
 [모던 JavaScript 튜토리얼](https://ko.javascript.info)
 [NPM CLI Documentation](https://docs.npmjs.com/cli-documentation/cli)
 
-## 강좌 6-6 morgan, bodyParser, cookieParser 02:00
+## 강좌 6-9
