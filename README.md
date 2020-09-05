@@ -472,7 +472,7 @@ formData.getAll('item'); // ['orange', 'melon']
 · PATCH: 서버 자원의 일부만 수정하고자 할 때 사용<br />
 · DELETE: 서버의 자원을 삭제하고자할 때 사용
 
-## 4.3 쿠키 이해하기
+## 4.3 쿠키와 세션 이해하기
 
 로그인을 하려면 쿠키과 세션에 대해서 알아야 한다.
 
@@ -510,10 +510,12 @@ res.writeHead(302, {
   'Set-Cookie': `name=${encodeURIComponent(name)}; Expires=${expires.toGMTString()}; HttpOnly; Path=/`,
 });
 ```
+
+### 세션 사용하기
 - 쿠키의 정보는 노출되고 수정되는 위험이 있음
   · 중요한 정보는 서버에서 관리하고 클라이언트에는 세션 키만 제공
   · 서버에 세션 객체(session) 생성 후, uniqueInt(키)를 만들어 속성명으로 사용
-  · 
+  · 속성 값에 정보 저장하고 uniqueInt를 클라이언트에 보냄
 
 
 ## 5.1 npm 알아보기
@@ -655,5 +657,5 @@ app.use('/', (req, res, next) => {
 [모던 JavaScript 튜토리얼](https://ko.javascript.info)
 [NPM CLI Documentation](https://docs.npmjs.com/cli-documentation/cli)
 
-## 강좌 4-6
+## 강좌 4-6 | 5:30
 ## 강좌 6-9 | 1:25
