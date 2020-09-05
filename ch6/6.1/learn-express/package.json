@@ -1,15 +1,13 @@
 {
   "name": "learn-express",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "scripts": {
     "start": "nodemon app"
   },
-  "author": "Heroyooi",
-  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  },
   "dependencies": {
     "express": "^4.17.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.4"
   }
 }

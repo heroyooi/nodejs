@@ -496,6 +496,25 @@ formData.getAll('item'); // ['orange', 'melon']
   · /login인 경우 쿼리스트링으로 온 이름을 쿠키로 저장<br />
   · 그 외의 경우 쿠키가 있는지 없는지 판단
 
+- 쿠키 옵션
+  · 쿠키명=쿠키값: 기본적인 쿠키의 값. mycookie=test 또는 name=zerocho 같이 설정<br />
+  · Expires=날짜: 만료 기한. 이 기한이 지나면 쿠키가 제거된다. 기본값은 클라이언트가 종료될 때까지<br />
+  · Max-age=초: Expires와 비슷. 날짜 대신 초를 입력할 수 있다. 해당 초가 지나면 쿠키가 제거. Expires보다 우선한다.<br />
+  · Domain=도메인명: 쿠키가 전송될 도메인을 특정할 수 있다. 기본값은 현재 도메인<br />
+  · Path=URL: 쿠키가 전송될 URL을 특정할 수 있다. 기본값은 '/'이고 이 경우 모든 URL에서 쿠키를 전송할 수 있다.<br />
+  · Secure: HTTPS일 경우에만 쿠키가 전송<br />
+  · HttpOnly: 설정 시 자바스크립트에서 쿠키에 접근할 수 없다. 쿠키 조작을 방지하기 위해 설정하는 것이 좋다.
+```JavaScript
+res.writeHead(302, {
+  Location: '/',
+  'Set-Cookie': `name=${encodeURIComponent(name)}; Expires=${expires.toGMTString()}; HttpOnly; Path=/`,
+});
+```
+- 쿠키의 정보는 노출되고 수정되는 위험이 있음
+  · 중요한 정보는 서버에서 관리하고 클라이언트에는 세션 키만 제공
+  · 서버에 세션 객체(session) 생성 후, uniqueInt(키)를 만들어 속성명으로 사용
+  · 
+
 
 ## 5.1 npm 알아보기
 
@@ -636,5 +655,5 @@ app.use('/', (req, res, next) => {
 [모던 JavaScript 튜토리얼](https://ko.javascript.info)
 [NPM CLI Documentation](https://docs.npmjs.com/cli-documentation/cli)
 
-## 강좌 4-5 | 11:10 | cookie2.js 작성중...
+## 강좌 4-6
 ## 강좌 6-9 | 1:25
