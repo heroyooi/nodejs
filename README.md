@@ -657,5 +657,12 @@ app.use('/', (req, res, next) => {
 [모던 JavaScript 튜토리얼](https://ko.javascript.info)
 [NPM CLI Documentation](https://docs.npmjs.com/cli-documentation/cli)
 
+## 편리한 모듈
+- rimraf: VSCODE 상에서 node_modules 폴더 삭제할 경우 사용
+```command
+npm i rimraf -g
+rimraf node_modules
+```
+
 ## 강좌 4-6 | 5:30
 ## 강좌 6-9 | 1:25
