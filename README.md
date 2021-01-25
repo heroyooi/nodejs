@@ -661,6 +661,7 @@ rimraf node_modules
 
 ## 기타 문법 (commonjs)
 1. JS 모듈 시스템
+- 객체를 exports 하는 경우
 ```JavaScript (module.js)
 module.exports = {
   a: 'b',
@@ -671,4 +672,14 @@ module.exports = {
 const { a, b } = require('./module');
 
 console.log(a, b) // b false
+```
+- 함수를 exports 하는 경우
+```JavaScript (module.js)
+module.exports = function() {
+  console.log('hi')
+}
+```
+```JavaScript
+const hi = require('./module');
+hi(); // hi
 ```
