@@ -647,11 +647,6 @@ app.use('/', (req, res, next) => {
 });
 ```
 
-### multer
-```command
-
-```
-
 ## 참고 링크
 
 [모던 JavaScript 튜토리얼](https://ko.javascript.info)
@@ -664,5 +659,16 @@ npm i rimraf -g
 rimraf node_modules
 ```
 
-## 강좌 4-6 | 5:30
-## 강좌 6-9 | 1:25
+## 기타 문법 (commonjs)
+1. JS 모듈 시스템
+```JavaScript (module.js)
+module.exports = {
+  a: 'b',
+  b: false,
+}
+```
+```JavaScript
+const { a, b } = require('./module');
+
+console.log(a, b) // b false
+```
