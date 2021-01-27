@@ -684,3 +684,11 @@ module.exports = function() {
 const hi = require('./module');
 hi(); // hi
 ```
+
+## NPM 명령어
+
+- 패키지 삭제
+```command
+npm rm 패키지명
+npm remove 패키지명
+```
