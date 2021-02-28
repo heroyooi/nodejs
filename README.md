@@ -685,6 +685,23 @@ const hi = require('./module');
 hi(); // hi
 ```
 
+## 기타 문법(node)
+- import 구문에서 as 를 사용하여 변수명을 다르게 불러올 수 있다.
+```JavaScript
+import { Redirect as abc } from 'react-router';
+```
+
+```JavaScript
+const { data: userData, error, revalidate, mutate } = useSWR('http://localhost:3095/api/users', fetcher, {
+  dedupingInterval: 2000,
+});
+
+if (!userData) {
+  return <Redirect to="/login" />;
+}
+```
+- 변수명을 바꿔서 사용할 수 있다.
+
 ## NPM 명령어
 
 - 패키지 삭제
