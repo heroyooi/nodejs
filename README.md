@@ -675,14 +675,29 @@ const { a, b } = require('./module');
 console.log(a, b) // b false
 ```
   - 함수를 exports 하는 경우
-```JavaScript (module.js)
-module.exports = function() {
-  console.log('hi')
-}
+    - 1. exports 하는 case
+```JavaScript (middlewares.js)
+exports.isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  return res.status(401).send('로그인이 필요합니다.');
+};
+
+exports.isNotLoggedIn = (req, res, next) => {}
 ```
+    - 2. module.exports 하는 case (우선순위가 더 높다!)
+```JavaScript (middlewares.js)
+module.exports = {
+  isLoggedIn: (req, res, next) => {},
+  isNotLoggedIn: (req, res, next) => {},
+};
+```
+    - 3. 가져다가 사용하는 부분
 ```JavaScript
-const hi = require('./module');
-hi(); // hi
+const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+router.post('/images', isLoggedIn, (req, res) => {
+});
 ```
 
 ## 기타 문법(node)
