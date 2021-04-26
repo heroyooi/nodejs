@@ -521,7 +521,7 @@ res.writeHead(302, {
 ## 5.1 npm 알아보기
 
 - npx SemVer
-```Json (package.json)
+```js (package.json)
 {
   "dependencies": {
     "body-parser": "^1.19.0", // ^첫번째 자리까지만 고정
